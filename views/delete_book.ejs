@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <%-include('./partials/header.ejs') %>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="book.css">
+
+    </head>
+
+
+    <body onload = "startTimer()">
+
+        <div class = "top">
+            <script src = "moving_img_index.js"> </script>
+            <button type="button" onclick="displayPreviousImage()"><b><</b></button>
+            <img id="img1" src="image1.jpg" alt= "Images" style="width:47%; height:83%; padding-top:1%; background-repeat:repeat-x;">
+            <img id="img2" src="image2.jpg" alt= "Images" style="width:47%; height:83%; padding-top:1%; background-repeat:repeat-x;">
+            <button type="button" onclick="displayNextImage2()"><b>></b></button>
+            <br>
+            
+            <h2><u>BOOKSTORE MANAGEMENT</u></h2>
+            
+            <!-- Navbar -->
+            <div id="nav_left">
+                <ul>
+                <li><a href="/create_book">Add Book</a></li>
+                <li><a href="/update_book">Update Book</a></li> 
+                <li><a href="/books">All Books</a></li>           
+                <li><a href="/">Home</a></li>
+                </ul>
+            </div>
+
+            <div id = "nav_right">
+                <form action="/search_book_by_id" method="POST">
+                    <input type="text" name ="isearch" id = "isearch" placeholder="Search Book by Id">
+                    <!-- <input type="hidden" name="username" id = "username"> -->
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+            <hr color="white">
+        </div>
+
+        <div class = "bottom">
+            <form id="deleteBookForm" method="DELETE" action="/books/:isbn">
+                <!-- You can use an input field to get ISBN from the user -->
+                <label for="isbnInput">Enter ISBN:</label>
+                <input type="text" id="isbnInput" placeholder="Enter ISBN number" />
+            
+                <!-- Other form fields or buttons can be added as needed -->
+            
+                <button type="button" onclick="deleteBook()">Delete Book</button>
+            </form>
+            
+            <script>
+                async function deleteBook() {
+                    const isbnInput = document.getElementById('isbnInput');
+                    const isbn = isbnInput.value.trim();
+            
+                    try {
+                        const response = await fetch(`/books/${isbn}`, {
+                            method: 'DELETE',
+                        });
+            
+                        if (response.ok) {
+                            console.log('Book deleted successfully');
+                            alert('Book deleted successfully');
+                            window.location.href = '/books'; // Redirect to book list page
+                        } else {
+                            const errorData = await response.json();
+                            console.error('Error deleting book:', errorData);
+                            alert('Error deleting book. Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An unexpected error occurred. Please try again.');
+                    }
+                }
+            </script>
+        </div> 
+
+    </body>
+
+</html>
+

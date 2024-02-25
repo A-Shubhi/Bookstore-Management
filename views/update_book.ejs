@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <%-include('./partials/header.ejs') %>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="book.css">
+
+    </head>
+
+
+    <body onload = "startTimer()">
+
+        <div class = "top">
+            <script src = "moving_img_index.js"> </script>
+            <button type="button" onclick="displayPreviousImage()"><b><</b></button>
+            <img id="img1" src="image1.jpg" alt= "Images" style="width:47%; height:83%; padding-top:1%; background-repeat:repeat-x;">
+            <img id="img2" src="image2.jpg" alt= "Images" style="width:47%; height:83%; padding-top:1%; background-repeat:repeat-x;">
+            <button type="button" onclick="displayNextImage2()"><b>></b></button>
+            <br>
+            
+            <h2><u>BOOKSTORE MANAGEMENT</u></h2>
+            
+            <!-- Navbar -->
+            <div id="nav_left">
+                <ul>
+                <li><a href="/delete_book">Delete Book</a></li>
+                <li><a href="/create_book">Add Book</a></li> 
+                <li><a href="/books">All Books</a></li>           
+                <li><a href="/">Home</a></li>
+                </ul>
+            </div>
+
+            <div id = "nav_right">
+                <form action="/search_book_by_id" method="POST">
+                    <input type="text" name ="isearch" id = "isearch" placeholder="Search Book by Id">
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+            <hr color="white">
+        </div>
+
+        <div class = "bottom">
+            
+        <form id="updateBookForm" method="PUT" action="/books/:isbn">
+            <label for="isbnInput">Enter ISBN:</label>
+            <input type="text" id="isbnInput" placeholder="Enter ISBN without hyphen" required />
+            <span id="isbnError" style="color: red;"></span>
+
+            <label for="titleInput">New Title:</label>
+            <input type="text" id="titleInput" placeholder="Enter new title" />
+
+            <label for="authorInput">New Author:</label>
+            <input type="text" id="authorInput" placeholder="Enter new author" />
+
+            <label for="priceInput">New Price:</label>
+            <input type="number" id="priceInput" placeholder="Enter new price" />
+
+
+            <button type="button" onclick="updateBook()">Update Book</button>
+        </form>
+
+        <script>
+            async function updateBook() {
+                const isbnInput = document.getElementById('isbnInput');
+                const titleInput = document.getElementById('titleInput');
+                const authorInput = document.getElementById('authorInput');
+                const priceInput = document.getElementById('priceInput');
+                const isbnError = document.getElementById('isbnError');
+        
+                const isbn = isbnInput.value.trim();
+                const title = titleInput.value.trim();
+                const author = authorInput.value.trim();
+                const price = priceInput.value.trim();
+        
+                // ISBN validation
+                const isbnRegex = /^(?:\d{10}|\d{13})$/;
+                if (!isbnRegex.test(isbn)) {
+                    isbnError.textContent = 'Please enter a valid ISBN.';
+                    return;
+                } else {
+                    isbnError.textContent = '';
+                }
+        
+                try {
+                    const response = await fetch(`/books/${isbn}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ title, author, price }),
+                    });
+        
+                    if (response.ok) {
+                        const updatedBook = await response.json();
+                        console.log('Book updated successfully:', updatedBook);
+                        alert('Book updated successfully');
+                        window.location.href = '/books'; // Redirect to book list page
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Error updating book:', errorData);
+                        alert('Error updating book. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            }
+        </script>
+
+    </body>
+
+</html>
+
