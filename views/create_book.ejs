@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,31 +34,48 @@
             <div id = "nav_right">
                 <form action="/search_book_by_id" method="POST">
                     <input type="text" name ="isearch" id = "isearch" placeholder="Search Book by Id">
-                    <!-- <input type="hidden" name="username" id = "username"> -->
                     <input type="submit" value="Search">
                 </form>
             </div>
             <hr color="white">
         </div>
 
-        <div class = "bottom">
-            <form method="POST" action="/add_book">
+        <div class="bottom">
+            <form method="POST" action="/add_book" onsubmit="return validateISBN()">
                 <label>Title:</label>
-                <input type="text" name="title" required />
-            
+                <input type="text" name="title" placeholder="Enter the book name" required />
+        
                 <label>Author:</label>
-                <input type="text" name="author" />
-            
+                <input type="text" name="author" placeholder="Enter the author name" />
+        
                 <label>ISBN:</label>
-                <input type="text" name="isbn" required />
-            
+                <input type="text" name="isbn" id="isbnInput" placeholder="Enter the ISBN number" required />
+                <span id="isbnError" style="color: red;"></span>
+        
                 <label>Price:</label>
-                <input type="number" name="price" required />Rs.
+                <input type="number" name="price" placeholder="Enter its price" required />Rs.
                 <br><br>
-            
+        
                 <button type="submit">Add Book</button>
             </form>
+        
+            <script>
+                function validateISBN() {
+                    const isbnInput = document.getElementById('isbnInput');
+                    const isbnError = document.getElementById('isbnError');
+                    const isbnRegex = /^(?:\d{10}|\d{13})$/;
+        
+                    if (!isbnRegex.test(isbnInput.value.trim())) {
+                        isbnError.textContent = 'Please enter a valid ISBN.';
+                        return false;
+                    } else {
+                        isbnError.textContent = '';
+                        return true;
+                    }
+                }
+            </script>
         </div>
+        
 
     </body>
 
