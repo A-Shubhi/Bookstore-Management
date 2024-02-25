@@ -1,0 +1,118 @@
+.top{
+    position: fixed;
+    background-color: rgb(39, 43, 43);
+    top:0;
+    height:45%;
+    width:100%;
+    padding-right:1%;
+    padding-left:1%;
+    color:aliceblue;
+    text-align: center;
+    overflow-y: hidden;
+}
+
+.right{
+    position: absolute;
+    background-color: rgb(203, 79, 38);
+    top:45%;
+    height:55%;
+    width:50%;
+    right:0;
+    padding-right:5%;
+    text-align: center;
+    text-decoration: wavy;
+    overflow-x: hidden;
+    /* background-image: url('tc2.jpg'); */
+    background-image: url('background1.jpg');
+    background-size: 100% 100%;
+    /* background-size:contain; */
+    
+}
+
+
+.left{
+    overflow-x: hidden;
+    position: absolute;
+    background-color: rgb(249, 177, 45);
+    top:45%;
+    left:0;
+    height:55%;
+    width:50%;
+    padding-left:3%;
+    padding-right:1%;
+    padding-top:2%;
+    text-align: center;
+    color: solid black;
+    
+}
+
+.cent {
+    
+    position: absolute;
+    top: 20%;
+    right:35%;
+    border-color: black;
+    opacity : 0.7;
+}
+
+.logo{
+    position: absolute;
+    top:33%;
+    right: 25%;
+    text-align: center;
+    transform: rotateZ(-30deg);
+    font-family: 'Brush Script MT', cursive;
+    font-size: 5.5em;
+    text-decoration: wavy;
+    text-shadow: 0cm;
+    color: azure;
+
+}
+
+
+#nav_loc{
+    display: fixed;
+    float:right;
+    text-align: right;
+    position:absolute;
+    bottom:4%;
+    right:1%;
+    pad:2%
+    /* width:10%; */
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding:0;
+    overflow: hidden;
+    
+    border-color: black;
+
+    
+}
+
+li {
+    pad : 1%;
+    float:right;
+    text-align: right;
+    /* background-color:rgb(154, 63, 63); */
+    
+}
+
+li a {
+    
+    display:flex;
+    color: white;
+    /* text-align: center; */
+    padding: 10px 12px;
+    text-decoration:underline;
+    /* float:right;
+    text-align: right; */
+    
+}
+
+li a:hover {
+    background-color:lightgrey;
+}
